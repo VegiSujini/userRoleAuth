@@ -50,7 +50,7 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     }
 
 3.Access a Protected Resource Using the JWT : 
-    ```sh
+     ```sh
     curl -X GET http://localhost:8080/hello \
     -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
 
