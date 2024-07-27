@@ -14,25 +14,52 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
 ### End points
 1. Register a New User
      ```sh
-        curl -X POST http://localhost:8080/register \
+    curl -X POST http://localhost:8080/register \
+    -H "Content-Type: application/json" \
+    -d '{
+    "username": "user",
+    "password": "password"
+    }'
+    
+   Expected Response :
+   ```sh
+    {
+    "id": 1,
+    "username": "user",
+    "password": "$2a$10$...",
+    "roles": [
+        {
+        "id": 1,
+        "name": "ROLE_USER"
+        }
+    ]
+    }
+2. Authenticate the User and Receive a JWT:
+     ```sh
+    curl -X POST http://localhost:8080/authenticate \
     -H "Content-Type: application/json" \
     -d '{
     "username": "user",
     "password": "password"
     }'
 
-Expected Response :
-{
-  "id": 1,
-  "username": "user",
-  "password": "$2a$10$...",
-  "roles": [
+    Expected Response :
+    ```sh
     {
-      "id": 1,
-      "name": "ROLE_USER"
+    "token": "eyJhbGciOiJIUzUxMiJ9..."
     }
-  ]
-}
+
+3.Access a Protected Resource Using the JWT : 
+    ```sh
+    curl -X GET http://localhost:8080/hello \
+    -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
+
+    Expected Response :
+    {
+    "message": "Hello, user!"
+    }
+
+
 
 
 ### Prerequisites
