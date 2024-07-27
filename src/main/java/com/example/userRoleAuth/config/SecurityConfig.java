@@ -40,21 +40,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        // http.csrf().disable()
-        // .authorizeRequests()
-        // .antMatchers("/authenticate", "/register").permitAll()
-        // .anyRequest().authenticated()
-        // .and()
-        // .sessionManagement().disable();
-        // }
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register").permitAll()
+                .antMatchers("/authenticate", "/register", "/h2-console/**").permitAll()
                 .antMatchers("/hello").hasRole("USER")
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // for h2-console
+        httpSecurity.headers().frameOptions().sameOrigin();
     }
 
     @Bean
