@@ -12,7 +12,7 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
 ## Getting Started
 
 ### End points
-1. Register a New User
+1. Register a New User :
      ```sh
     curl -X POST http://localhost:8080/register \
     -H "Content-Type: application/json" \
@@ -50,11 +50,12 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     }
 
 3.Access a Protected Resource Using the JWT : 
-     ```sh
+    ```sh
     curl -X GET http://localhost:8080/hello \
     -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
 
     Expected Response :
+    ```sh
     {
     "message": "Hello, user!"
     }
