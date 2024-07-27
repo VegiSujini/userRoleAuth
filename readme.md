@@ -11,6 +11,30 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
 
 ## Getting Started
 
+### End points
+1. Register a New User
+     ```sh
+        curl -X POST http://localhost:8080/register \
+    -H "Content-Type: application/json" \
+    -d '{
+    "username": "user",
+    "password": "password"
+    }'
+
+Expected Response :
+{
+  "id": 1,
+  "username": "user",
+  "password": "$2a$10$...",
+  "roles": [
+    {
+      "id": 1,
+      "name": "ROLE_USER"
+    }
+  ]
+}
+
+
 ### Prerequisites
 
 - Java 11 or later
