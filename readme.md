@@ -22,7 +22,7 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     }'
     
    Expected Response :
-   ```sh
+ 
     {
     "id": 1,
     "username": "user",
@@ -44,7 +44,7 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     }'
 
     Expected Response :
-    ```sh
+
     {
     "token": "eyJhbGciOiJIUzUxMiJ9..."
     }
@@ -54,7 +54,7 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
 
     Expected Response :
-    ```sh
+    
     {
     "message": "Hello, user!"
     }
