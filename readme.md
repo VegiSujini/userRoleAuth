@@ -49,9 +49,9 @@ This project demonstrates a Spring Boot application integrated with Spring Secur
     "token": "eyJhbGciOiJIUzUxMiJ9..."
     }
 3. Access a Protected Resource Using the JWT : 
-        ```sh
-        curl -X GET http://localhost:8080/hello \
-        -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
+    ```sh
+    curl -X GET http://localhost:8080/hello \
+    -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9..."
 
     Expected Response :
     ```sh
