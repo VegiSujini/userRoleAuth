@@ -1,7 +1,10 @@
 package com.example.userRoleAuth.controller;
 
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +25,9 @@ import com.example.userRoleAuth.repository.RoleRepository;
 import com.example.userRoleAuth.repository.UserRepository;
 import com.example.userRoleAuth.service.JwtUserDetailsService;
 import com.example.userRoleAuth.util.JwtTokenUtil;
+
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @RestController
 @CrossOrigin
@@ -45,6 +51,17 @@ public class UserRoleController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @PostMapping("/register")
+    public User saveUser(@RequestBody User user) throws Exception {
+        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findById(1L).orElseThrow(() -> new Exception("Role not found")));
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
+
     @PostMapping("/authenticate")
     public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -53,15 +70,6 @@ public class UserRoleController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return new JwtResponse(token);
-    }
-
-    @PostMapping("/register")
-    public User saveUser(@RequestBody User user) throws Exception {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findById(1L).orElseThrow(() -> new Exception("Role not found")));
-        user.setRoles(roles);
-        return userRepository.save(user);
     }
 
     private void authenticate(String username, String password) throws Exception {
